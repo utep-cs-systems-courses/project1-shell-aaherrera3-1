@@ -1,19 +1,26 @@
-import os, sys, time
+import os, sys, time, shlex, re 
+from bashFunc import *
 
-directory = os.getcwd() #Get current working directory 
-while 1:
-    command = input(directory+'$') #Ask user for command input 
 
-    rc = os.fork() #create a child process
+def main():
+    while True:
+        directory = os.getcwd() # Get current working directory
+        args = input(directory+'$') # user input
 
-    if rc < 0: #if rc is less than 0 fork failed
-        os.write(2,("Fork failed, returning %d\n" % rc).encode())
-        sys.exit(1)
-    elif rc == 0: #if rc is equal to 0 run child process
-        os.system(command)
-        time.sleep(1)
-        sys.exit(0)
-    else:   #wait for child process to end before continuing.
-        child = os.wait()
-
+        if args == "exit": # check if user wants to exit progrma
+            sys.exit(1)
         
+        args = shlex.split(args) # slit input to shell keys 
+
+        rc = os.fork() # creat new child process
+
+        if rc < 0: # If fork fails 
+            os.write(2,("fork failed, returning %d\n" % rc).encode)
+            sys.exit(1)
+        elif rc == 0: # If fork works
+            runExec(args) # Run simple command
+        else:
+            os.wait() # wait for child process to 
+
+if __name__ == "__main__":
+    main()
