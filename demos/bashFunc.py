@@ -18,7 +18,13 @@ def outputRedirect(args):
 
 def inputRedirect(args):
     index = args.index('<') # get index of redirect symbol
-    os.close(0)  # redirect child's output
+    os.close(0)  # redirect child's input
     os.open(args[index+1], os.O_RDONLY) #open file to read
     os.set_inheritable(0,True)
     runExec(args[0:index])
+
+def cd(args):
+    if '..' in args[1]:
+        os.chdir('..')
+    else:
+        os.chdir(args[1])

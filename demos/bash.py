@@ -5,7 +5,7 @@ from bashFunc import *
 def main():
     while True:
         directory = os.getcwd() # Get current working directory
-        args = input(directory+'$') # user input
+        args = input(directory+' $') # user input
 
         if args == "exit": # check if user wants to exit progrma
             sys.exit(1)
@@ -22,6 +22,8 @@ def main():
                 outputRedirect(args) # run redirect output
             elif '<' in args:
                 inputRedirect(args)
+            elif 'cd' in args:
+                cd(args)
             else:
                 runExec(args) # Run simple command
         else:
