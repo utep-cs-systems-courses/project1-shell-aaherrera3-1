@@ -18,7 +18,12 @@ def main():
             os.write(2,("fork failed, returning %d\n" % rc).encode)
             sys.exit(1)
         elif rc == 0: # If fork works
-            runExec(args) # Run simple command
+            if '>' in args:
+                outputRedirect(args) # run redirect output
+            elif '<' in args:
+                inputRedirect(args)
+            else:
+                runExec(args) # Run simple command
         else:
             os.wait() # wait for child process to 
 
