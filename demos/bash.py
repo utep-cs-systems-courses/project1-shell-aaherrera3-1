@@ -24,6 +24,8 @@ def main():
                 inputRedirect(args)
             elif 'cd' in args:
                 cd(args)
+            elif '|' in args:
+                pipe(args)
             else:
                 runExec(args) # Run simple command
         else:
